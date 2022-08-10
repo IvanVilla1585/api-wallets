@@ -12,9 +12,7 @@ import { WalletModule } from './Wallet/wallet.module';
     UserModule,
     WalletModule,
     ConfigModule.forRoot(),
-    MongooseModule.forRoot(
-      'mongodb+srv://ivan_dev:3YJdGKM8xh6pRC0K@cluster1.qwbywco.mongodb.net/?retryWrites=true&w=majority',
-    ),
+    MongooseModule.forRoot(process.env.MONGO_URI),
   ],
 })
 export class AppModule {}
