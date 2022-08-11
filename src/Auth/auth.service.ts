@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable, NotFoundException } from '@nestjs/common';
 
+import { UserBaseDto } from '../Dtos/UserBaseDto';
 import { UserAuthResponseDto, AuthDto } from './dtos';
 import { User, UserDocument } from '../User/user.schema';
 
@@ -36,20 +37,21 @@ export class AuthService {
 
     return {
       token,
-      id: user.id,
-      email: user.email,
-      document: user.document,
-      fullName: user.fullName,
-      address: user.address || undefined,
+      user: {
+        id: user.id,
+        email: user.email,
+        document: user.document,
+        fullName: user.fullName,
+        address: user.address || undefined,
+      },
     };
   }
 
-  async validateUser(id: string): Promise<UserAuthResponseDto> {
+  async validateUser(id: string): Promise<UserBaseDto> {
     const user: UserDocument = await this.userModel.findById(id);
 
     return {
       id: user.id,
-      token: undefined,
       email: user.email,
       document: user.document,
       fullName: user.fullName,
